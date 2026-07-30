@@ -1,0 +1,19 @@
+@import '../styles/variables';
+@import '../styles/mixins';
+
+.header {
+  background: $primary-color;
+  padding: 1.5rem 1rem;
+  text align: center;
+  border-bottom: 1px solid $border-color;
+
+  h1 {
+    font-size: 1.5rem;
+    }
+
+  @include tablet {
+    padding: 2.5rem 2rem;
+    h1 { font-size: 2rem; }
+    }
+
+  }
