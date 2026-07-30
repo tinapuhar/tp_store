@@ -2,10 +2,10 @@
 @use '../styles/mixins';
 
 .header {
-  background: $primary-color;
+  background: variables.$primary-color;
   padding: 1.5rem 1rem;
   text-align: center;
-  border-bottom: 1px solid $border-color;
+  border-bottom: 1px solid variables.$border-color;
 
   h1 {
     font-size: 1.5rem;

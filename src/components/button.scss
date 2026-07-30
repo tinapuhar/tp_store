@@ -2,11 +2,15 @@
 @use '../styles/mixins';
 
 .btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  text-align: center;
   width: 100%;
   min-height: 48px;
   padding: 0.75rem 1rem;
-  background-color: $button-color;
-  color: $button-text-color;
+  background-color: variables.$button-color;
+  color: variables.$button-text-color;
   border: none;
   border-radius: 8px;
   font-size: 1.2rem;
@@ -15,7 +19,7 @@
   transition: background 0.2s;
 
   &:hover {
-    background-color: darken($button-color, 10%);
+    background-color: darken(variables.$button-color, 10%);
     }
 
   @include tablet {
@@ -25,3 +29,28 @@
     }
 
   }
+
+.btn-medium {
+  @extend .btn;
+  min-height: 48px;
+  padding: 0.75rem 1.25rem;
+  border-radius: 8px;
+  font-size: 1.1rem;
+
+  @include mixins.tablet {
+    padding: 0.5rem 1.25rem;
+  }
+}
+
+.btn-small {
+  @extend .btn;
+  width: auto; 
+  min-height: 36px;
+  padding: 0.35rem 0.75rem;
+  border-radius: 6px;
+  font-size: 0.9rem;
+
+  @include mixins.tablet {
+    padding: 0.35rem 0.75rem;
+  }
+}

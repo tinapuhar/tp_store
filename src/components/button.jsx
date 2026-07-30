@@ -1,8 +1,13 @@
-import "./button.scss";
+import './button.scss';
 
-const Button = (props) => {
-    return (
-        <button className={props.classList} onClick={props.onClick}>{props.title}</button>
-    )
-}
+const Button = ({ children, title, variant = "", className = "", ...props }) => {
+  const combinedClasses = `btn ${variant} ${className}`.trim();
+
+  return (
+    <button className={combinedClasses} title={title} {...props}>
+      {children || title}
+    </button>
+  );
+};
+
 export default Button;
