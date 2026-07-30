@@ -1,10 +1,8 @@
-import React from 'react';
-import styles from './button.scss';
+import "./button.scss";
 
-export default function Button({ children, onClick, type = 'button' }) {
+const Button = (props) => {
     return (
-        <button type={type} className={styles.btn} onClick={onClick}>
-            {children}
-        </button>
-    );
+        <button className={props.classList} onClick={props.onClick}>{props.title}</button>
+    )
 }
+export default Button;

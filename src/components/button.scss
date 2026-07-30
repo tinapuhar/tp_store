@@ -1,21 +1,21 @@
-@import '../styles/variables';
-@import '../styles/mixins';
+@use '../styles/variables';
+@use '../styles/mixins';
 
 .btn {
   width: 100%;
   min-height: 48px;
   padding: 0.75rem 1rem;
-  background-color: $primary-color;
-  color: white;
+  background-color: $button-color;
+  color: $button-text-color;
   border: none;
   border-radius: 8px;
-  font-size: 1rem;
+  font-size: 1.2rem;
   font-weight: 500;
   cursor: pointer;
   transition: background 0.2s;
 
   &:hover {
-    background-color: darken($primary-color, 10%);
+    background-color: darken($button-color, 10%);
     }
 
   @include tablet {
