@@ -1,4 +1,4 @@
-import './button.scss';
+import './Button.scss';
 
 const Button = ({ children, title, variant = "", className = "", ...props }) => {
   const combinedClasses = `btn ${variant} ${className}`.trim();
