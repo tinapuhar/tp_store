@@ -1,18 +1,18 @@
-@import './src/styles/main.scss';
+@use './styles/main.scss';
 
 body {
   margin: 0;
-  font-family: 'Cormorant', Georgia, serif;
-  background-color: black; 
-  background-image: url('../src/assets/images/bg.png'); 
+  font-family: 'Cormorant', Georgia, serif; 
+  background-color: black;
+  background-image: url('./assets/images/bg.png'); 
   background-repeat: repeat;
   }
 
-  h1, .button, .navbar {
-  font-family: 'Tangerine', cursive;
-  font-size: 3.5rem;
-  background-color: black; //dodaj svojo!
+  h1, .btn, .navbar {
+  font-family: 'Tangerine', cursive;;
 }
+
+
 
 /*
 :root {

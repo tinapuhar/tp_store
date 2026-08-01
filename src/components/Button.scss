@@ -1,5 +1,6 @@
-@use '../styles/variables';
-@use '../styles/mixins';
+@use 'sass:color';
+@use '../styles/_variables.scss';
+@use '../styles/_mixins.scss';
 
 .btn {
   display: inline-flex;
@@ -19,14 +20,15 @@
   transition: background 0.2s;
 
   &:hover {
-    background-color: darken(variables.$button-color, 10%);
+    background-color: color.scale(variables.$button-color, $lightness: -10%);
     }
 
-  @include tablet {
+    @include mixins.tablet {
     width: auto;
     min-height: auto;
     padding: 0.5rem 1.2rem;
     }
+
 
   }
 

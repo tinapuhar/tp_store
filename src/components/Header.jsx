@@ -2,7 +2,9 @@ import "./Header.scss";
 
 const Header = () => (
   <header className="header">
-    <h1>time in your hands</h1>
+    <div className="ticker-wrapper">
+      <h1 className="header-title">... time in your hands</h1>
+    </div>
   </header>
 );
 

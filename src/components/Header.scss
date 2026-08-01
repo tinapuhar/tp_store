@@ -1,20 +1,43 @@
-@use '../styles/variables';
-@use '../styles/mixins';
+@use '../styles/_variables.scss';
+@use '../styles/_mixins.scss';
 
 .header {
   background: variables.$primary-color;
-  padding: 1.5rem 1rem;
-  text-align: center;
   border-bottom: 1px solid variables.$border-color;
-
-  h1 {
-    font-size: 1.5rem;
-    font-weight: 500;
-    }
-
-  @include tablet {
-    padding: 2.5rem 2rem;
-    h1 { font-size: 2rem; }
-    }
-
+  width: 100%;
+  overflow: hidden;
+  padding: 1.5rem 0;
   }
+
+.ticker-wrapper {
+  width: 100%;
+  display: flex;
+}
+
+.header-title {
+  font-family: 'Tangerine', cursive;
+  font-size: 1.5rem;
+  font-weight: 500;
+  letter-spacing: 0.1rem;
+  word-spacing: 0.4rem;
+  color: variables.$border-color;
+  margin: 0;
+  white-space: nowrap; 
+  display: inline-block;
+  animation: scroll-left-to-right 40s linear infinite; 
+}
+
+@include mixins.tablet {
+  .header-title { 
+    font-size: 2.5rem; 
+  }
+}
+
+@keyframes scroll-left-to-right {
+  0% {
+    transform: translateX(-100%); 
+  }
+  100% {
+    transform: translateX(100vw);
+  }
+}

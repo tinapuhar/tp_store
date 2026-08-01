@@ -1,3 +1,35 @@
+.page-container {
+  text-align: center;
+  min-height: 100vh;
+  color: white;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+
+  h1 {
+    font-size: 2.5rem;
+    color: blue;
+    margin-bottom: 20px;
+  }
+}
+.content {
+  width: 100%;
+  flex: 1;
+  background-color: black;
+  background-image: url('./assets/images/bg.png'); 
+  background-repeat: repeat; 
+  background-position: top left;
+  background-size: 25px 25px; 
+}
+
+  .btn {
+    &:hover {
+      transform: scale(1.05);
+    }
+  }
+
+
 /*.counter {
   font-size: 16px;
   padding: 5px 10px;
