@@ -13,17 +13,20 @@
   top: 0;
   z-index: 1000;
 
-  // Logo styling
-  .logo {
-    font-size: 3.5rem;
-    font-weight: 800;
-    color: variables.$border-color;
+  .logo-link {
+    display: flex;
+    align-items: center;
     text-decoration: none;
-    letter-spacing: 1px;
-    transition: color 0.2s ease;
 
-    &:hover {
-      color: rgb(247, 125, 145);
+    .logo-img {
+      height: 160px;
+      width: auto;
+      display: block;
+      transition: transform 0.2s ease;
+
+      &:hover {
+        transform: scale(2);
+      }
     }
   }
 
@@ -36,7 +39,7 @@
     padding: 0;
 
     .cart-link {
-      color: variables.$accent-color; 
+      color: variables.$button-color; 
     }
 
     li {
@@ -55,14 +58,12 @@
       position: relative;
       transition: color 0.2s ease;
 
-      // Hover state
       &:hover {
         color: variables.$light-text-color;
       }
 
-      // Automatically applied by react-router-dom when active
       &.active {
-        color: variables.$button-color;
+        color: variables.$border-color;
         font-weight: 900;
 
         // Bottom accent line for the active tab

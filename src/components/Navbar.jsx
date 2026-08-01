@@ -1,12 +1,13 @@
 import { NavLink } from 'react-router-dom';
 import './Navbar.scss';
+import tpLogo from '../assets/icons/tplogo.png';
 
 function Navbar() {
   return (
     <nav className="navbar">
       {/* Use NavLink to direct back home */}
-      <NavLink to="/" className="logo">
-        TP_STORE
+      <NavLink to="/" className="logo-link">
+        <img src={tpLogo} alt="TP_STORE Logo" className="logo-img" />
       </NavLink>
       
       <ul className="nav-links">
