@@ -3,7 +3,7 @@ import "./Header.scss";
 const Header = () => (
   <header className="header">
     <div className="ticker-wrapper">
-      <h1 className="header-title">... time in your hands</h1>
+      <h1 className="header-title">... eternity in your hands</h1>
     </div>
   </header>
 );
