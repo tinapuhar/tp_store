@@ -1,17 +1,32 @@
+@use '../src/styles/_variables.scss';
+
 .page-container {
   text-align: center;
   min-height: 100vh;
-  color: white;
+  color: variables.$white-color;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
 
   h1 {
-    font-size: 2.5rem;
-    color: blue;
+    font-size: 3rem;
+    color: variables.$secondary-color;
+    margin-bottom: 30px;
+  }
+
+  h2 {
+    font-size: 3rem;
+    color: variables.$secondary-color;
+    margin-bottom: 30px;
+  }
+
+  p {
+    font-size: 1.2rem;
+    color: variables.$primary-color;
     margin-bottom: 20px;
   }
+
 }
 .content {
   width: 100%;

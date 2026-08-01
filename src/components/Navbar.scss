@@ -22,7 +22,7 @@
       height: 160px;
       width: auto;
       display: block;
-      transition: transform 0.2s ease;
+      transition: transform 0.5s ease;
 
       &:hover {
         transform: scale(2);
@@ -39,7 +39,7 @@
     padding: 0;
 
     .cart-link {
-      color: variables.$button-color; 
+      color: variables.$accent-color; 
     }
 
     li {
@@ -47,7 +47,7 @@
       align-items: center;
     }
 
-    // Targets the NavLink tags
+    // NavLink tags
     a {
       text-decoration: none;
       color: variables.$gray-color;
@@ -63,7 +63,7 @@
       }
 
       &.active {
-        color: variables.$border-color;
+        color: variables.$button-color;
         font-weight: 900;
 
         // Bottom accent line for the active tab
