@@ -1,4 +1,3 @@
-//how to import colors?
 @use '../styles/_variables.scss';
 @use '../styles/_mixins.scss';
 
@@ -9,7 +8,7 @@
   padding: 1rem 2rem;
   background-color: black;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  border-bottom: 1px solid yellow;
+  border-bottom: 1px solid variables.$border-color;
   position: sticky;
   top: 0;
   z-index: 1000;
@@ -18,7 +17,7 @@
   .logo {
     font-size: 3.5rem;
     font-weight: 800;
-    color: black;
+    color: variables.$border-color;
     text-decoration: none;
     letter-spacing: 1px;
     transition: color 0.2s ease;
@@ -33,8 +32,12 @@
     display: flex;
     list-style: none;
     gap: 2rem;
-    margin: 30px;
+    margin: 20px;
     padding: 0;
+
+    .cart-link {
+      color: variables.$accent-color; 
+    }
 
     li {
       display: flex;
@@ -44,21 +47,22 @@
     // Targets the NavLink tags
     a {
       text-decoration: none;
-      color: gray;
-      font-weight: 800;
-      font-size: 2rem;
+      color: variables.$gray-color;
+      font-weight: 900;
+      font-size: 2.4rem;
       padding: 0.5rem 0;
+      margin-right: 20px;
       position: relative;
       transition: color 0.2s ease;
 
       // Hover state
       &:hover {
-        color: white;
+        color: variables.$light-text-color;
       }
 
       // Automatically applied by react-router-dom when active
       &.active {
-        color: violet;
+        color: variables.$button-color;
         font-weight: 900;
 
         // Bottom accent line for the active tab

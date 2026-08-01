@@ -23,7 +23,7 @@ function Navbar() {
           <NavLink to="/contact">Contact</NavLink>
         </li>
         <li>
-          <NavLink to="/cart">Cart</NavLink>
+          <NavLink to="/cart" className="cart-link">Cart</NavLink>
         </li>
       </ul>
     </nav>
