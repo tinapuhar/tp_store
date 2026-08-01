@@ -2,9 +2,10 @@
 
 .footer {
   text-align: center;
-  padding: 1.2rem;
+  padding: 0.8rem;
   background: variables.$dark-text-color;
   color: variables.$secondary-color;
+  border-top: 1px solid variables.$button-color;
   margin-top: auto;
   font-size: 0.9rem;
   p {
