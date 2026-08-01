@@ -2,8 +2,8 @@
 @use '../styles/_mixins.scss';
 
 .header {
-  background: variables.$primary-color;
-  border-bottom: 1px solid variables.$border-color;
+  background: variables.$dark-text-color;
+  border-bottom: 1px solid variables.$button-color;
   width: 100%;
   overflow: hidden;
   padding: 1.5rem 0;
@@ -16,11 +16,11 @@
 
 .header-title {
   font-family: 'Tangerine', cursive;
-  font-size: 1.5rem;
+  font-size: 1.4rem;
   font-weight: 500;
   letter-spacing: 0.1rem;
-  word-spacing: 0.4rem;
-  color: variables.$border-color;
+  word-spacing: 0.6rem;
+  color: variables.$button-color;
   margin: 0;
   white-space: nowrap; 
   display: inline-block;

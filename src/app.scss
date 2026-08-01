@@ -1,4 +1,87 @@
 @use '../src/styles/_variables.scss';
+@use '../src/styles/_mixins.scss'; 
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+}
+
+.content {
+  width: 100%;
+  flex: 1;
+  background-color: black;
+  background-image: url('./assets/images/bg.png'); 
+  background-repeat: repeat; 
+  background-position: top left;
+  background-size: 25px 25px; 
+}
+
+.page-container {
+  text-align: center;
+  color: variables.$white-color;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 2rem 1rem; 
+
+  h1 {
+    font-size: 2.2rem; 
+    color: variables.$secondary-color;
+    margin-bottom: 20px;
+  }
+
+  h2 {
+    font-size: 2.2rem;
+    color: variables.$secondary-color;
+    margin-bottom: 20px;
+  }
+
+  p {
+    font-size: 1.1rem;
+    color: variables.$primary-color;
+    margin-bottom: 20px;
+  }
+}
+
+@include mixins.tablet {
+  .app {
+    height: 100vh; 
+    overflow: hidden; 
+  }
+
+  .content {
+    overflow-y: auto; 
+  }
+
+  .page-container {
+    min-height: 100%;
+
+    h1 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+
+    h2 {
+      font-size: 3rem;
+      margin-bottom: 30px;
+    }
+
+    p {
+      font-size: 1.2rem;
+      margin-bottom: 20px;
+    }
+  }
+}
+
+.btn {
+  &:hover {
+    transform: scale(1.05);
+  }
+}
+
+/*1@use '../src/styles/_variables.scss';
 
 .page-container {
   text-align: center;
@@ -42,7 +125,7 @@
     &:hover {
       transform: scale(1.05);
     }
-  }
+  }*/
 
 
 /*.counter {
