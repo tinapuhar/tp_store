@@ -14,6 +14,7 @@ export default Offer;*/
 import React, { useState } from 'react';
 import Button from '../components/Button';
 import './offer.scss';
+import { useCart } from '../context/cart_context'
 
 export default function Offer() {
   const [selectedOptions, setSelectedOptions] = useState({});
@@ -52,8 +53,16 @@ export default function Offer() {
 
   const handleAddToCart = (offer) => {
     const chosenOption = selectedOptions[offer.id] || 'single-bracelet';
+    const extendedOfferObject = {
+      id: offer.id,
+      title: offer.title,
+      image: offer.image,
+      subcategory: "Offers"
+    };
+    addToCart(extendedOfferObject, chosenOption);
     const chosenLabel = productOptions.find(opt => opt.value === chosenOption)?.label;
-    alert(`Added Offer Item to Cart:\n${offer.title}\nOption: ${chosenLabel}`);
+    alert(`${offer.title} successfully added to your basket!`);
+
   };
 
   return (

@@ -1,0 +1,246 @@
+@use '../styles/variables.scss';
+@use '../styles/mixins.scss';
+
+.cart-page {
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .cart-title {
+    text-align: center;
+    color: variables.$border-color;
+    font-size: 3rem;
+    margin-bottom: 3.5rem;
+  }
+
+  .empty-cart-message {
+    text-align: center;
+    color: variables.$gray-color;
+    padding: 4rem 2rem;
+    background-color: rgba(2, 44, 51, 0.3);
+    border: 1px dashed variables.$dark-text-color;
+    border-radius: 8px;
+    font-size: 1.2rem;
+  }
+
+  // Dashboard structure
+  .cart-layout-grid {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+
+    @include mixins.desktop {
+      flex-direction: row;
+      align-items: flex-start;
+    }
+
+    // Left container: Column list containing sequential item blocks
+    .cart-items-list {
+      flex: 1.6;
+      display: flex;
+      flex-direction: column;
+      gap: 1.5rem;
+
+      .cart-flat-item-card {
+        display: flex;
+        background-color: rgba(2, 44, 51, 0.45);
+        border: 1px solid variables.$dark-text-color;
+        border-radius: 8px;
+        overflow: hidden;
+        height: 130px;
+        box-shadow: 0 8px 20px rgba(0,0,0,0.4);
+
+        .item-thumbnail {
+          width: 130px;
+          height: 100%;
+          background: #111;
+
+          img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+          }
+        }
+
+        .item-details {
+          flex: 1;
+          padding: 1.25rem;
+          display: flex;
+          flex-direction: column;
+          justify-content: space-between;
+
+          .item-main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+
+            h3 {
+              margin: 0;
+              color: variables.$white-color;
+              font-size: 1.2rem;
+              font-weight: 500;
+            }
+
+            .delete-item-btn {
+              background: none;
+              border: none;
+              color: variables.$gray-color;
+              font-size: 1.1rem;
+              cursor: pointer;
+              transition: color 0.2s;
+              padding: 0 0.25rem;
+
+              &:hover {
+                color: variables.$accent-color; // Highlights red/orange on item delete hover
+              }
+            }
+          }
+
+          .item-spec {
+            margin: 0.25rem 0 0 0;
+            color: variables.$light-text-color;
+            font-size: 0.9rem;
+          }
+
+          .price-quantity-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+
+            .qty-tag {
+              color: variables.$gray-color;
+              font-size: 0.95rem;
+            }
+
+            .price-tag {
+              color: variables.$border-color;
+              font-weight: 600;
+              font-size: 1.15rem;
+
+              .discount-alert {
+                color: variables.$accent-color;
+                font-size: 0.85rem;
+              }
+            }
+          }
+        }
+      }
+    }
+
+    // Right container: Fixed Summary & Checkout Panel Form
+    .checkout-summary-panel {
+      flex: 1;
+      background-color: rgba(2, 44, 51, 0.7);
+      border: 2px solid variables.$button-color;
+      border-radius: 12px;
+      padding: 2rem;
+      box-shadow: 0 12px 30px rgba(0,0,0,0.5);
+
+      @include mixins.desktop {
+        position: sticky;
+        top: 40px; // Pin on viewport scroll
+      }
+
+      h2 {
+        margin-top: 0;
+        color: variables.$white-color;
+        font-size: 1.5rem;
+        border-bottom: 1px solid rgba(249, 242, 149, 0.15);
+        padding-bottom: 0.75rem;
+      }
+
+      .summary-row {
+        display: flex;
+        justify-content: space-between;
+        margin: 1.5rem 0;
+        color: variables.$gray-color;
+        font-size: 1.05rem;
+
+        &.total-row {
+          color: variables.$white-color;
+          border-top: 1px dashed variables.$dark-text-color;
+          padding-top: 1.5rem;
+          margin-bottom: 2rem;
+
+          .final-total {
+            color: variables.$border-color;
+            font-size: 1.6rem;
+            font-weight: bold;
+          }
+        }
+      }
+
+      .payment-options-section {
+        margin-bottom: 2.5rem;
+
+        h3 {
+          color: variables.$light-text-color;
+          font-size: 0.95rem;
+          text-transform: uppercase;
+          letter-spacing: 1px;
+          margin-bottom: 1rem;
+        }
+
+        .payment-radio-label {
+          display: flex;
+          align-items: center;
+          gap: 0.75rem;
+          padding: 0.85rem 1rem;
+          background: rgba(0, 0, 0, 0.2);
+          border: 1px solid variables.$dark-text-color;
+          border-radius: 6px;
+          color: variables.$white-color;
+          margin-bottom: 0.75rem;
+          cursor: pointer;
+          font-size: 0.95rem;
+          transition: all 0.2s ease;
+
+          &:hover {
+            border-color: variables.$light-text-color;
+          }
+
+          &.selected {
+            border-color: variables.$button-color;
+            background: rgba(229, 160, 19, 0.05);
+          }
+
+          input[type="radio"] {
+            display: none; // Hide generic browser bullet, styled cleanly using custom selectors below
+          }
+
+          .radio-custom {
+            width: 16px;
+            height: 16px;
+            border: 2px solid variables.$gray-color;
+            border-radius: 50%;
+            display: inline-block;
+            position: relative;
+            transition: all 0.2s;
+          }
+
+          input[type="radio"]:checked + .radio-custom {
+            border-color: variables.$button-color;
+            
+            &::after {
+              content: '';
+              width: 8px;
+              height: 8px;
+              background-color: variables.$button-color;
+              border-radius: 50%;
+              position: absolute;
+              top: 50%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+            }
+          }
+        }
+      }
+
+      .checkout-finalize-btn {
+        width: 100%;
+        padding: 1rem;
+        font-size: 1.1rem;
+      }
+    }
+  }
+}

@@ -15,6 +15,7 @@ export default Products;*/
 import React, { useState } from 'react';
 import Button from '../components/Button';
 import './products.scss';
+import { useCart } from '../context/cart_context'
 
 // generate the 36 items across your specific subcategories
 const generateInitialProducts = () => {
@@ -71,9 +72,8 @@ export default function Products() {
   // Mock addition function for cart phase
   const handleAddToCart = (product) => {
     const chosenOption = selectedOptions[product.id] || 'single-bracelet';
-    const chosenLabel = productOptions.find(opt => opt.value === chosenOption)?.label;
-    
-    alert(`Added to temporary session:\n${product.title}\nOption: ${chosenLabel}`);
+    addToCart (product, chosenOption);
+    alert(`${product.title} added to your basket!`);
   };
 
   // Filter items matching current navigation tab state

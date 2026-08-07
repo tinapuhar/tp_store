@@ -1,3 +1,7 @@
+import React from 'react';
+import { RouterProvider, createBrowserRouter } from 'react-router-dom';
+import { CartProvider } from './context/cart_context';
+
 import './styles/main.scss';
 import './styles/global.scss';
 import './styles/_variables.scss';
@@ -49,4 +53,15 @@ function App() {
   );
 }
 
-export default App;
+//export default App;
+
+
+export default function App() {
+  // Keep your exact createBrowserRouter code here intact
+  
+  return (
+    <CartProvider>
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
+}
