@@ -1,10 +1,10 @@
 import React from 'react';
+import './home.scss';
 
 const Home = () => {
   return (
     <div className="page-container home-page">
       <h1>Welcome to Timeless Pieces Jewellery Store</h1>
-      <h3>Explore our store today to find the perfect piece that resonates with your personal energy and enhances your style.</h3>
       <p>Welcome to a world where nature’s finest treasures are transformed into wearable art. 
         Our jewelry store specializes in handcrafted, one-of-a-kind pieces designed to connect you deeply with the raw beauty of the earth. 
         Every single necklace, bracelet, and accessory is meticulously crafted by hand, ensuring that no two items are ever exactly alike.</p>

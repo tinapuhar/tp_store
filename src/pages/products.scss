@@ -8,7 +8,7 @@
 
   .products-title {
     text-align: center;
-    color: variables.$border-color; // Elegant gold matching the navbar accents
+    color: variables.$border-color; 
     font-size: 3rem;
     margin-bottom: 0.5rem;
   }
@@ -32,11 +32,12 @@
     border-bottom: 1px solid rgba(249, 242, 149, 0.15);
 
     .filter-tab {
+      font-family: inherit;
       background: rgba(2, 44, 51, 0.6);
       border: 1px solid variables.$dark-text-color;
       color: variables.$gray-color;
       padding: 0.6rem 1.2rem;
-      font-size: 0.95rem;
+      font-size: 1.1rem;
       border-radius: 20px;
       cursor: pointer;
       transition: all 0.25s ease;
@@ -99,13 +100,14 @@
         }
 
         .subcategory-badge {
+          font-family: inherit;
           position: absolute;
           top: 12px;
           right: 12px;
           background: rgba(0, 0, 0, 0.75);
           color: variables.$light-text-color;
           padding: 0.35rem 0.75rem;
-          font-size: 0.8rem;
+          font-size: 0.9rem;
           border-radius: 4px;
           border: 1px solid rgba(217, 171, 230, 0.3);
         }
@@ -122,6 +124,7 @@
         flex-grow: 1;
 
         .product-item-title {
+          font-family: inherit;
           color: variables.$white-color;
           font-size: 1.3rem;
           margin-bottom: 0.75rem;
@@ -130,6 +133,7 @@
         }
 
         .product-item-description {
+          font-family: inherit;
           color: variables.$gray-color;
           font-size: 0.95rem;
           line-height: 1.5;
@@ -143,6 +147,7 @@
           margin-bottom: 1.5rem;
 
           label {
+            font-family: inherit;
             color: variables.$light-text-color;
             font-size: 0.85rem;
             margin-bottom: 0.4rem;
@@ -151,11 +156,12 @@
           }
 
           select {
+            font-family: inherit;
             background-color: rgba(0, 0, 0, 0.4);
             border: 1px solid variables.$dark-text-color;
             color: variables.$white-color;
             padding: 0.65rem;
-            font-size: 0.95rem;
+            font-size: 1.1rem;
             border-radius: 4px;
             outline: none;
             cursor: pointer;

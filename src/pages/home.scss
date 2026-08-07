@@ -1,0 +1,57 @@
+@use '../styles/variables.scss';
+@use '../styles/mixins.scss';
+
+.home-page {
+  @include mixins.flex-column;
+  align-items: center;
+  margin: 0 auto;
+  padding: 2rem 1.25rem;
+  color: variables.$dark-text-color;
+  text-align: center;
+
+  @include mixins.tablet {
+    padding: 2rem 1.5rem;
+    max-width: 768px;
+  }
+
+  @include mixins.desktop {
+    padding: 2rem 0;
+    max-width: 1000px;
+  }
+
+  h1 {
+    font-size: 2.1rem;
+    color: variables.$primary-color;
+    margin-bottom: 1.5rem;
+    line-height: 1.3;
+
+    @include mixins.tablet {
+      font-size: 2.75rem;
+    }
+  }
+
+  p {
+    font-size: 1rem;
+    line-height: 1.8;
+    margin-bottom: 2rem;
+    color: variables.$dark-text-color;
+    text-align: left;
+
+    @include mixins.tablet {
+      font-size: 1.05rem;
+      text-align: justify;
+    }
+
+    &:first-of-type {
+      font-size: 1.1rem;
+      padding-bottom: 2rem;
+      border-bottom: 2px solid variables.$button-color;
+      margin-bottom: 2rem;
+
+      @include mixins.tablet {
+        font-size: 1.2rem;
+      }
+    }
+  }
+}
+

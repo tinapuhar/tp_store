@@ -22,46 +22,37 @@ import Contact from './pages/contact.jsx';
 import Offer from './pages/offer.jsx';
 import Products from './pages/products.jsx';
 
+// The layout structure that keeps your header, navbar, and footer on every page
 function Layout() {
   return (
     <div className="app">
       <Navbar />
       <Header />
       <main className="content">
-        {/* The Outlet is where the active page component will load */}
-        <Outlet />
+        <Outlet /> 
       </main>
       <Footer />
     </div>
   );
 }
 
+// Your main app component wrapped in the global CartProvider
 function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Layout />}>
-          {/* Child routes matching your exact page files */}
-          <Route index element={<Home />} />
-          <Route path="products" element={<Products />} />
-          <Route path="offer" element={<Offer />} />
-          <Route path="contact" element={<Contact />} />
-          <Route path="cart" element={<Cart />} />
-        </Route>
-      </Routes>
-    </BrowserRouter>
-  );
-}
-
-//export default App;
-
-
-export default function App() {
-  // Keep your exact createBrowserRouter code here intact
-  
-  return (
     <CartProvider>
-      <RouterProvider router={router} />
+      <BrowserRouter>
+        <Routes>
+          <Route path="/" element={<Layout />}>
+            <Route index element={<Home />} />
+            <Route path="products" element={<Products />} />
+            <Route path="offer" element={<Offer />} />
+            <Route path="contact" element={<Contact />} />
+            <Route path="cart" element={<Cart />} />
+          </Route>
+        </Routes>
+      </BrowserRouter>
     </CartProvider>
   );
 }
+
+export default App;
