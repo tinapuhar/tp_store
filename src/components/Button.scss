@@ -11,11 +11,11 @@
   min-height: 48px;
   padding: 0.75rem 1rem;
   background-color: variables.$button-color;
-  color: variables.$button-text-color;
+  color: variables.$dark-text-color;
   border: none;
   border-radius: 8px;
-  font-size: 1.2rem;
-  font-weight: 500;
+  font-size: 1.6rem;
+  font-weight: 600;
   cursor: pointer;
   transition: background 0.2s;
 
@@ -37,7 +37,7 @@
   min-height: 48px;
   padding: 0.75rem 1.25rem;
   border-radius: 8px;
-  font-size: 1.1rem;
+  font-size: 1.6rem;
 
   @include mixins.tablet {
     padding: 0.5rem 1.25rem;
@@ -50,7 +50,7 @@
   min-height: 36px;
   padding: 0.35rem 0.75rem;
   border-radius: 6px;
-  font-size: 0.9rem;
+  font-size: 1.6rem;
 
   @include mixins.tablet {
     padding: 0.35rem 0.75rem;

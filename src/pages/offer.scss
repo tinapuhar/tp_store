@@ -1,0 +1,176 @@
+@use '../styles/variables.scss';
+@use '../styles/mixins.scss';
+
+.offers-page {
+  padding: 3rem 1.5rem;
+  max-width: 1200px;
+  margin: 0 auto;
+
+  .offers-title {
+    text-align: center;
+    color: variables.$border-color; 
+    font-size: 3rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .offers-subtitle {
+    text-align: center;
+    color: variables.$white-color;
+    font-size: 1.1rem;
+    margin-bottom: 4rem;
+    font-style: italic;
+  }
+
+  .offers-list-container {
+    display: flex;
+    flex-direction: column;
+    gap: 2.5rem;
+    width: 85%;
+    margin: 0 auto;
+
+    @include mixins.desktop {
+      width: 75%;
+    }
+
+    // Flat row layout card frame
+    .offer-flat-card {
+      display: flex;
+      flex-direction: column; // Stack vertically on mobile devices
+      background-color: rgba(2, 44, 51, 0.55); 
+      border: 1px solid variables.$button-color; 
+      border-radius: 12px;
+      overflow: hidden;
+      box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+      transition: transform 0.3s ease, border-color 0.3s ease;
+
+      @include mixins.tablet {
+        flex-direction: row; // Flat horizontal layout from tablets upward
+        height: 280px; // Clean unified height framework
+      }
+
+      &:hover {
+        transform: translateY(-4px);
+        border-color: variables.$border-color;
+      }
+
+      // Left Photo Container Section
+      .image-section {
+        position: relative;
+        width: 100%;
+        background: #111;
+
+        @include mixins.tablet {
+          width: 40%; // Occupies left side ratio uniformly
+          height: 100%;
+        }
+
+        img {
+          width: 100%;
+          height: 100%;
+          object-fit: cover;
+          display: block;
+        }
+
+        .exclusive-ribbon {
+          position: absolute;
+          top: 15px;
+          left: 15px;
+          background: variables.$accent-color; 
+          color: variables.$white-color;
+          padding: 0.4rem 0.9rem;
+          font-size: 0.8rem;
+          font-weight: bold;
+          text-transform: uppercase;
+          border-radius: 4px;
+          letter-spacing: 1px;
+          box-shadow: 0 4px 10px rgba(0,0,0,0.4);
+        }
+      }
+
+      // Right Information Panel Section
+      .info-section {
+        padding: 2rem;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        flex-grow: 1;
+
+        @include mixins.tablet {
+          width: 60%;
+        }
+
+        .offer-item-title {
+          color: variables.$white-color;
+          font-size: 1.6rem;
+          margin-top: 0;
+          margin-bottom: 0.75rem;
+          font-weight: 600;
+        }
+
+        .offer-item-description {
+          color: variables.$gray-color;
+          font-size: 1.05rem;
+          line-height: 1.6;
+          margin-bottom: 1.5rem;
+        }
+
+        // Aligns choice dropdown and cart action side by side
+        .actions-wrapper {
+          display: flex;
+          flex-direction: column;
+          gap: 1.5rem;
+
+          @include mixins.tablet {
+            flex-direction: row;
+            align-items: flex-end;
+            justify-content: space-between;
+          }
+
+          .options-selector-group {
+            @include mixins.flex-column;
+            flex-grow: 1;
+
+            label {
+              color: variables.$light-text-color;
+              font-size: 0.85rem;
+              margin-bottom: 0.5rem;
+              text-transform: uppercase;
+              letter-spacing: 1px;
+            }
+
+            select {
+              background-color: rgba(0, 0, 0, 0.5);
+              border: 1px solid variables.$dark-text-color;
+              color: variables.$white-color;
+              padding: 0.75rem;
+              font-size: 1rem;
+              border-radius: 4px;
+              outline: none;
+              cursor: pointer;
+              transition: border-color 0.2s;
+              width: 100%;
+
+              &:focus {
+                border-color: variables.$border-color;
+              }
+
+              option {
+                background-color: #022c33;
+                color: variables.$white-color;
+              }
+            }
+          }
+
+          .add-to-cart-btn {
+            width: 100%;
+            height: 46px; // Clean, centered button sizing
+
+            @include mixins.tablet {
+              width: 160px; // Fixed width button inside flat layout rows
+            }
+          }
+        }
+      }
+    }
+  }
+}
