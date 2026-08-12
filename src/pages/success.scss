@@ -1,0 +1,50 @@
+@use '../styles/variables' as variables;
+@use '../styles/mixins' as mixins;
+
+.success-page {
+  padding: 4rem 1.5rem;
+  min-height: 70vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  .success-card {
+    background-color: rgba(2, 44, 51, 0.45);
+    border: 1px solid variables.$button-color; // Framed in gold
+    border-radius: 12px;
+    padding: 3rem 2rem;
+    max-width: 550px;
+    width: 100%;
+    box-shadow: 0 15px 35px rgba(0, 0, 0, 0.6);
+    text-align: center;
+    backdrop-filter: blur(4px);
+    -webkit-backdrop-filter: blur(4px);
+
+    .success-icon {
+      font-size: 3.5rem;
+      color: variables.$button-color; // Signature gold color
+      margin-bottom: 1.5rem;
+      line-height: 1;
+    }
+
+    .success-heading {
+      color: variables.$white-color;
+      font-size: 2.5rem;
+      font-family: 'Tangerine', cursive;
+      margin-bottom: 1rem;
+    }
+
+    .success-message {
+      color: variables.$light-text-color;
+      font-size: 1.15rem;
+      line-height: 1.6;
+      margin-bottom: 2.5rem;
+    }
+
+    .back-home-btn {
+      width: 200px;
+      min-height: 48px;
+      font-size: 1.75rem;
+    }
+  }
+}

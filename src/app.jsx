@@ -1,4 +1,4 @@
-import React from 'react';
+/*import React from 'react';
 import { RouterProvider, createBrowserRouter } from 'react-router-dom';
 import { CartProvider } from './context/cart_context';
 
@@ -55,4 +55,68 @@ function App() {
   );
 }
 
-export default App;
+export default App;*/
+
+import React from 'react';
+import { createBrowserRouter, RouterProvider, Outlet } from 'react-router-dom';
+import { CartProvider } from './context/cart_context.jsx'; //dodan jsx ker ni zaganjalo, je prav?
+
+import './styles/main.scss';
+import './styles/global.scss';
+import './app.scss';
+
+// Global Layout Components
+import Navbar from "./components/Navbar.jsx"; // Loaded first
+import Header from "./components/Header.jsx"; // Loaded second
+import Footer from "./components/Footer.jsx";
+
+// Store Pages
+import Home from './pages/home.jsx';
+import Products from './pages/products.jsx';
+import Offer from './pages/offer.jsx';
+import Contact from './pages/contact.jsx';
+import Cart from './pages/cart.jsx';
+import Success from './pages/success.jsx';
+
+// 1. Clean Layout Core definition
+const AppLayout = () => {
+  return (
+    <div className="app">
+      <Navbar />
+      <Header />
+      <div className="content">
+        <Outlet /> 
+      </div>
+      <Footer />
+    </div>
+  );
+};
+
+// 2. Clear Routing Map
+const router = createBrowserRouter([
+  {
+    path: "/",
+    element: <AppLayout />,
+    children: [
+      { index: true, element: <Home /> },
+      { path: "products", element: <Products /> },
+      { path: "offer", element: <Offer /> },
+      { path: "contact", element: <Contact /> },
+      { path: "cart", element: <Cart /> },
+      { path: "success", element: <Success /> }
+    ]
+  }
+]);
+
+// 3. Parent Component Engine
+export default function App() {
+  return (
+    <CartProvider>
+      {/* Moving the provider to wrap the active router completely solves the context initialization bug! */}
+      <RouterProvider router={router} />
+    </CartProvider>
+  );
+}
+
+
+

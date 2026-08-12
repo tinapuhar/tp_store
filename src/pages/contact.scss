@@ -126,6 +126,14 @@
     }
   }
 
+  .contact-subtitle {
+    text-align: center;
+    color: variables.$white-color;
+    font-size: 1.1rem;
+    margin-bottom: 2rem;
+    font-style: italic;
+  }
+
   .contact-form {
     @include mixins.flex-column;
     width: 100%;
@@ -185,6 +193,7 @@
       display: flex;
       justify-content: center;
       margin-top: 0.5rem;
+      font-size: 1.1rem;
     }
   }
 }

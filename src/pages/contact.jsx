@@ -11,35 +11,97 @@ const Contact = () => {
 
 export default Contact;*/
 
-import React from 'react';
+import React, { useState } from 'react';
 import './contact.scss';
-import Button from '../components/Button';
+import Button from '../components/Button.jsx';
+import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
+  const [formData, setFormData] = useState({ name: '', email: '', message: '' });
+  const [isSending, setIsSending] = useState(false);
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    setIsSending(true);
+
+    //  LIVE LINK PIPEDREAM TRIGGER CONNECTED
+    const PIPEDREAM_WEBHOOK_URL = "https://eolikvk78sx82hh.m.pipedream.net";
+
+    try {
+      const response = await fetch(PIPEDREAM_WEBHOOK_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          formType: "Contact Inquiry Form",
+          customerName: formData.name,
+          customerEmail: formData.email,
+          message: formData.message,
+          targetInbox: "tinapuhar@gmail.com"
+        })
+      });
+
+      if (response.ok) {
+        alert('Thank you for your message! Our artisan studio team will reach out to you shortly.');
+        setFormData({ name: '', email: '', message: '' }); // Safely clears text boxes
+      } else {
+        throw new Error("Network dispatch failed.");
+      }
+    } catch (error) {
+      alert('Oops! Something went wrong while transmitting your message. Please try again.');
+    } finally {
+      setIsSending(false);
+    }
+  };
+
   return (
     <div className="page-container contact-page">
-      <h2>Contact Us</h2>
+      <h2 className="contact-title">Contact Us</h2>
+      <p className="contact-subtitle">Have questions about our designs? Reach out to our artisan studio.</p>
       
-      <form className="contact-form" onSubmit={(e) => e.preventDefault()}>
+      <form className="contact-form" onSubmit={handleSubmit}>
         <div className="form-group">
           <label htmlFor="name">Full Name</label>
-          <input type="text" id="name" placeholder="Your name" required />
+          <input 
+            type="text" 
+            id="name" 
+            placeholder="First and last name" 
+            value={formData.name}
+            onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+            required 
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="email">E-mail Address</label>
-          <input type="email" id="email" placeholder="Your e-mail address" required />
+          <input 
+            type="email" 
+            id="email" 
+            placeholder="your.email@example.com" 
+            value={formData.email}
+            onChange={(e) => setFormData({ ...formData, email: e.target.value })}
+            required 
+          />
         </div>
 
         <div className="form-group">
           <label htmlFor="message">Your Message</label>
-          <textarea id="message" rows="6" placeholder="Tell us about your dream jewellery piece..." required></textarea>
+          <textarea 
+            id="message" 
+            rows="6" 
+            placeholder="Tell us about details or questions you have..." 
+            value={formData.message}
+            onChange={(e) => setFormData({ ...formData, message: e.target.value })}
+            required
+          ></textarea>
         </div>
 
-        <Button type="submit" title="Send Message" />
+        <Button type="submit" variant="btn-medium" className="submit-btn" disabled={isSending}>
+          {isSending ? 'Sending...' : 'Send Message'}
+        </Button>
       </form>
     </div>
   );
 };
 
 export default Contact;
+

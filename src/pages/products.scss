@@ -178,6 +178,14 @@
           }
         }
 
+        .product-price {
+            font-size: 1.6rem;
+            font-weight: bold;
+            color: variables.$border-color; 
+            text-align: right;
+            margin-bottom: 1rem;
+            }
+
         .add-to-cart-btn {
           width: 100%; // Stretches button frame across card width
           margin-top: auto;

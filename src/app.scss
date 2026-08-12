@@ -53,8 +53,8 @@
 
 @include mixins.tablet {
   .app {
-    height: 100vh; 
-    overflow: hidden; 
+    min-height: 100vh; 
+    //overflow: hidden; 
   }
 
   .content {

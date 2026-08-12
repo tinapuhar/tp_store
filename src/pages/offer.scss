@@ -45,7 +45,7 @@
 
       @include mixins.tablet {
         flex-direction: row; // Flat horizontal layout from tablets upward
-        height: 280px; // Clean unified height framework
+        height: 320px; // Clean unified height framework
       }
 
       &:hover {
@@ -125,6 +125,17 @@
             align-items: flex-end;
             justify-content: space-between;
           }
+
+          .offer-price {
+           font-size: 1.6rem;
+           font-weight: bold;
+           color: variables.$border-color;
+           white-space: nowrap;
+          .new-price {
+           color: variables.$accent-color; // Bold vibrant orange discount alert text
+           }
+          }
+
 
           .options-selector-group {
             @include mixins.flex-column;
