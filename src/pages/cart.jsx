@@ -23,6 +23,9 @@ export default function Cart() {
 
   const { cart, removeFromCart, cartTotal, clearCart } = useCart();
   
+    // MASTER TOGGLE: Change to `false` to lock orders, `true` to open them
+  const ORDERS_ENABLED = true; 
+
   // Default payment selection set to Bank Transfer since others are locked
   const [paymentMethod, setPaymentMethod] = useState('bank-transfer');
   const [isProcessing, setIsProcessing] = useState(false);
@@ -274,10 +277,21 @@ export default function Cart() {
               Your checkout configuration list and delivery details will be forwarded to our registry log upon your confirmation. After confirming the order, you will receive payment instructions on your e-mail address.
             </div>
 
-            {/*Custom Interactive Form Submit Button*/}
-            <Button type="submit" variant="btn-medium" className="checkout-finalize-btn" disabled={isProcessing}>
-              {isProcessing ? 'Processing Order...' : 'Confirm Order'}
+            {/* Custom Interactive Form Submit Button - Controlled by MASTER TOGGLE */}
+            <Button 
+              type="submit" 
+              variant="btn-medium" 
+              className="checkout-finalize-btn" 
+              disabled={!ORDERS_ENABLED || isProcessing}
+              style={(!ORDERS_ENABLED) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed' } : {}}
+            >
+              {!ORDERS_ENABLED 
+                ? 'Orders Temporarily Paused' 
+                : isProcessing 
+                  ? 'Processing Order...' 
+                  : 'Confirm Order'}
             </Button>
+
           </div>
 
         </form>
