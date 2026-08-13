@@ -19,6 +19,8 @@ import './cart.scss';
 import { useNavigate } from 'react-router-dom';
 
 export default function Cart() {
+  const navigate = useNavigate();
+
   const { cart, removeFromCart, cartTotal, clearCart } = useCart();
   
   // Default payment selection set to Bank Transfer since others are locked
@@ -43,7 +45,7 @@ export default function Cart() {
     setCustomerInfo(prev => ({ ...prev, [name]: value }));
   };
 
-  const handleCheckoutSubmit = async (e) => {
+  /*const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     if (cart.length === 0) return alert("Your cart is currently empty.");
     
@@ -75,6 +77,7 @@ export default function Cart() {
           `Order Confirmed via Bank Transfer!\n\nThank you, ${customerInfo.fullName}. A complete statement, payment details, and shipping invoice breakdown has been logged and sent to tinapuhar@gmail.com.`
         );
         clearCart(); // Clear local storage basket state on complete success
+        navigate('/success', { state: { type: 'order' } });
       } else {
         throw new Error("Network payload rejected.");
       }
@@ -83,7 +86,49 @@ export default function Cart() {
     } finally {
       setIsProcessing(false);
     }
+  };*/
+
+    const handleCheckoutSubmit = async (e) => {
+    e.preventDefault();
+    if (cart.length === 0) return alert("Your cart is currently empty.");
+    
+    setIsProcessing(true);
+    
+    // backend api
+    const LOCAL_ORDER_API_URL = "http://localhost:5000/api/order";
+
+    try {
+      const response = await fetch(LOCAL_ORDER_API_URL, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          customerName: customerInfo.fullName,
+          customerEmail: customerInfo.email,
+          shippingAddress: customerInfo.shippingAddress,
+          orderNotes: customerInfo.orderNotes,
+          purchasedProductsBreakdown: serializedOrderDetails,
+          orderGrandTotal: `€${cartTotal.toFixed(2)}`,
+          targetInbox: "tinapuhar@gmail.com"
+        })
+      });
+
+      if (response.ok) {
+        alert(
+          `Order Confirmed via Bank Transfer!\n\nThank you, ${customerInfo.fullName}. A complete statement, payment details, and shipping invoice breakdown has been logged and prepared for your email.`
+        );
+        clearCart(); 
+        navigate('/success', { state: { type: 'order' } }); 
+      } else {
+        throw new Error("Local backend server rejected the order payload.");
+      }
+    } catch (error) {
+      console.error("Checkout dispatch routing error:", error);
+      alert('An error occurred during order routing. Please check your connection and try again.');
+    } finally {
+      setIsProcessing(false);
+    }
   };
+
     return (
     <div className="page-container cart-page">
       <h1 className="cart-title">Your Shopping Basket</h1>

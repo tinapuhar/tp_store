@@ -1,0 +1,14 @@
+[
+  {
+    "id": "offer-1",
+    "title": "Magical Earth",
+    "image": "special_offer_1.jpg",
+    "description": "An exclusive curation of black and brown-yellow stone beads. Limited time special offer."
+  },
+  {
+    "id": "offer-2",
+    "title": "Spirit Collection",
+    "image": "special_offer_2.jpg",
+    "description": "A premium selection featuring vibrant cherry-red stone beads. Limited time special offer."
+  }
+]

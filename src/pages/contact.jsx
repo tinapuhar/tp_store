@@ -17,6 +17,8 @@ import Button from '../components/Button.jsx';
 import { useNavigate } from 'react-router-dom';
 
 const Contact = () => {
+  const navigate = useNavigate();
+
   const [formData, setFormData] = useState({ name: '', email: '', message: '' });
   const [isSending, setIsSending] = useState(false);
 
@@ -24,11 +26,11 @@ const Contact = () => {
     e.preventDefault();
     setIsSending(true);
 
-    //  LIVE LINK PIPEDREAM TRIGGER CONNECTED
-    const PIPEDREAM_WEBHOOK_URL = "https://eolikvk78sx82hh.m.pipedream.net";
+    // link to backend
+    const LOCAL_CONTACT_API_URL = "http://localhost:5000/api/contact";
 
-    try {
-      const response = await fetch(PIPEDREAM_WEBHOOK_URL, {
+        try {
+        const response = await fetch(LOCAL_CONTACT_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
@@ -42,7 +44,8 @@ const Contact = () => {
 
       if (response.ok) {
         alert('Thank you for your message! Our artisan studio team will reach out to you shortly.');
-        setFormData({ name: '', email: '', message: '' }); // Safely clears text boxes
+        setFormData({ name: '', email: '', message: '' }); 
+        navigate('/success', { state: { type: 'contact' } }); 
       } else {
         throw new Error("Network dispatch failed.");
       }

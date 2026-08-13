@@ -255,6 +255,7 @@ import React, { useState } from 'react';
 import Button from '../components/Button.jsx';
 import './offer.scss';
 import { useCart } from '../context/cart_context.jsx';
+import offersData from '../data/offers.json';
 
 // Core pricing configuration matrix
 const EXCLUSIVE_COSTS = {
@@ -268,24 +269,16 @@ export default function Offer() {
   const { addToCart, cart } = useCart();
   const [selectedOptions, setSelectedOptions] = useState({});
 
-  // Extracted individual string image URLs cleanly to prevent React rendering crashes
-  const specialOfferImage1 = new URL('../assets/images/products/special_offer_1.jpg', import.meta.url).href;
-  const specialOfferImage2 = new URL('../assets/images/products/special_offer_2.jpg', import.meta.url).href;
-
-  const offersData = [
-    {
-      id: 'offer-1',
-      title: 'Sacred Earth',
-      image: specialOfferImage1,
-      description: 'An exclusive curation of black and brown-yellow stone beads. Limited time special offer.'
-    },
-    {
-      id: 'offer-2',
-      title: 'Spirit Collection',
-      image: specialOfferImage2,
-      description: 'A premium selection featuring vibrant cherry-red stone beads. Limited time special offer.'
+  // Dynamic image resolver helper to match JSON filenames to assets properly
+  const getOfferImage = (imageName) => {
+    if (imageName === 'special_offer_1.jpg') {
+      return new URL('../assets/images/products/special_offer_1.jpg', import.meta.url).href;
     }
-  ];
+    if (imageName === 'special_offer_2.jpg') {
+      return new URL('../assets/images/products/special_offer_2.jpg', import.meta.url).href;
+    }
+    return '';
+  };
 
   const productOptions = [
     { value: 'single-bracelet', label: 'Single Bracelet (18cm)' },
@@ -304,6 +297,7 @@ export default function Offer() {
     // Explicitly defining subcategory as 'Offers' triggers your 10% discount checking!
     const productPayload = {
       ...offer,
+      image: getOfferImage(offer.image), // Map resolved image URL
       subcategory: 'Offers'
     };
 
@@ -321,6 +315,7 @@ export default function Offer() {
           const currentVariantKey = selectedOptions[offer.id] || 'single-bracelet';
           const rawBasePrice = EXCLUSIVE_COSTS[currentVariantKey];
           const discountDisplayPrice = rawBasePrice * 0.9;
+          const resolvedImageUrl = getOfferImage(offer.image);
 
           // Check if this specific item style option is currently in the cart
           const isCurrentOptionInCart = cart.some(
@@ -336,10 +331,9 @@ export default function Offer() {
               
               {/* Left Side: Photo with Special Deal Ribbon */}
               <div className="image-section">
-                <img src={offer.image} alt={offer.title} loading="lazy" />
+                <img src={resolvedImageUrl} alt={offer.title} loading="lazy" />
                 <div className="exclusive-ribbon">{isFullySoldOut ? 'Sold' : 'Special Deal'}</div>
                 
-                {/* 🌟 UPDATED: Appended (Temporary Hold) text status message on full product lock */}
                 {isFullySoldOut && (
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0,0,0,0.85)', color: '#ff4d00', padding: '0.4rem 0.8rem', borderRadius: '4px', fontSize: '1.1rem', fontWeight: 'bold', border: '1px solid #ff4d00', whiteSpace: 'nowrap', zIndex: 10 }}>
                     Currently Not Available (Temporary Hold)
@@ -352,10 +346,8 @@ export default function Offer() {
                 <h2 className="offer-item-title">{offer.title}</h2>
                 <p className="offer-item-description">{offer.description}</p>
                 
-                {/* Spaced-out inline layout wrapper eliminates crowding entirely */}
                 <div className="actions-wrapper" style={{ display: 'flex', flexDirection: 'column', gap: '1.25rem', width: '100%' }}>
                   
-                  {/* Top Row: Dropdown menu gets full structural breathing room */}
                   <div className="options-selector-group" style={{ width: '100%', display: 'flex', flexDirection: 'column' }}>
                     <label htmlFor={`select-${offer.id}`}>Select Arrangement:</label>
                     <select 
@@ -372,7 +364,6 @@ export default function Offer() {
                         
                         return (
                           <option key={option.value} value={option.value}>
-                            {/* 🌟 UPDATED: Custom status wording inside your exclusive choice items */}
                             {option.label} {isThisOptionTaken ? ' - (Temporary Hold)' : ''}
                           </option>
                         );
@@ -380,7 +371,6 @@ export default function Offer() {
                     </select>
                   </div>
 
-                  {/* Bottom Row: Price items and Action Buttons align side-by-side cleanly */}
                   <div className="price-action-row" style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', width: '100%', gap: '1rem' }}>
                     
                     <div className="offer-price" style={{ display: 'flex', flexDirection: 'column', alignItems: 'flex-start', lineHeight: '1.2' }}>
@@ -399,7 +389,6 @@ export default function Offer() {
                       disabled={isFullySoldOut || isCurrentOptionInCart}
                       style={(isFullySoldOut || isCurrentOptionInCart) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed', width: '180px', minHeight: '50px', fontSize: '1.75rem' } : { width: '180px', minHeight: '50px', fontSize: '1.75rem' }}
                     >
-                      {/* 🌟 UPDATED: Action Call Button Status Description */}
                       {isFullySoldOut ? 'Sold Out' : isCurrentOptionInCart ? 'Temporary Hold' : 'Add To Cart'}
                     </Button>
 
@@ -415,4 +404,3 @@ export default function Offer() {
     </div>
   );
 }
-
