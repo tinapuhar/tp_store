@@ -48,49 +48,6 @@ export default function Cart() {
     setCustomerInfo(prev => ({ ...prev, [name]: value }));
   };
 
-  /*const handleCheckoutSubmit = async (e) => {
-    e.preventDefault();
-    if (cart.length === 0) return alert("Your cart is currently empty.");
-    
-    setIsProcessing(true);
-    const PIPEDREAM_WEBHOOK_URL = "https://pipedream.net";
-
-    try {
-      const response = await fetch(PIPEDREAM_WEBHOOK_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          formType: "Checkout Transaction Order",
-          orderGrandTotal: `€${cartTotal.toFixed(2)}`,
-          selectedPaymentRoute: "Direct Bank Wire Transfer",
-          purchasedProductsBreakdown: serializedOrderDetails,
-          
-          // Injecting customer fields safely into Pipedream webhook package
-          customerName: customerInfo.fullName,
-          customerEmail: customerInfo.email,
-          shippingAddress: customerInfo.shippingAddress,
-          orderNotes: customerInfo.orderNotes,
-          
-          targetInbox: "tinapuhar@gmail.com"
-        })
-      });
-
-      if (response.ok) {
-        alert(
-          `Order Confirmed via Bank Transfer!\n\nThank you, ${customerInfo.fullName}. A complete statement, payment details, and shipping invoice breakdown has been logged and sent to tinapuhar@gmail.com.`
-        );
-        clearCart(); // Clear local storage basket state on complete success
-        navigate('/success', { state: { type: 'order' } });
-      } else {
-        throw new Error("Network payload rejected.");
-      }
-    } catch (error) {
-      alert('An error occurred during order routing. Please check your connection and try again.');
-    } finally {
-      setIsProcessing(false);
-    }
-  };*/
-
     const handleCheckoutSubmit = async (e) => {
     e.preventDefault();
     if (cart.length === 0) return alert("Your cart is currently empty.");
