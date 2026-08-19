@@ -11,7 +11,7 @@ const Offer = () => {
 
 export default Offer;*/
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../components/Button.jsx';
 import './offer.scss';
 import { useCart } from '../context/cart_context.jsx';
@@ -28,6 +28,17 @@ const EXCLUSIVE_COSTS = {
 export default function Offer() {
   const { addToCart, cart } = useCart();
   const [selectedOptions, setSelectedOptions] = useState({});
+
+  // Live state tracking global array ledger from local server
+  const [permanentlySoldItems, setPermanentlySoldItems] = useState([]);
+
+  // Fetch true database inventories from backend routing on page load
+  useEffect(() => {
+    fetch('http://localhost:5000/api/sold-items', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setPermanentlySoldItems(data))
+      .catch(err => console.error("Error pulling live store inventory locks:", err));
+  }, []);
 
   // Dynamic image resolver helper to match JSON filenames to assets properly
   const getOfferImage = (imageName) => {
@@ -54,17 +65,16 @@ export default function Offer() {
   const handleAddToCart = (offer) => {
     const chosenOptionKey = selectedOptions[offer.id] || 'single-bracelet';
     
-    // Explicitly defining subcategory as 'Offers' triggers your 10% discount checking!
     const productPayload = {
       ...offer,
-      image: getOfferImage(offer.image), // Map resolved image URL
+      image: getOfferImage(offer.image), 
       subcategory: 'Offers'
     };
 
     addToCart(productPayload, chosenOptionKey);
-    alert(`${offer.title} successfully added to your basket!`);
+    alert(`${offer.title} successfully added to your shopping basket!`);
   };
-
+  
   return (
     <div className="page-container offers-page">
       <h1 className="offers-title">Exclusive Collections</h1>
@@ -77,14 +87,26 @@ export default function Offer() {
           const discountDisplayPrice = rawBasePrice * 0.9;
           const resolvedImageUrl = getOfferImage(offer.image);
 
-          // Check if this specific item style option is currently in the cart
+          // 1. Check if the currently selected option is sitting in the transient cart
           const isCurrentOptionInCart = cart.some(
             item => item.id === offer.id && item.optionKey === currentVariantKey
           );
 
-          // Count how many options of this specific piece are currently in the cart
-          const optionsInCartCount = cart.filter(item => item.id === offer.id).length;
-          const isFullySoldOut = optionsInCartCount === 4;
+          // 2. Check if the currently selected option has been permanently sold on the server
+          const isOptionSoldPermanently = permanentlySoldItems.some(
+            item => item.id === offer.id.toString() && item.optionKey === currentVariantKey
+          );
+
+          // 3. Combine parameters to block the main button states immediately
+          const isCurrentOptionUnavailable = isCurrentOptionInCart || isOptionSoldPermanently;
+
+          // 4. Calculate total locked variant choices to completely fade out the product card frame
+          const totalUnavailableOptionsCount = productOptions.filter(option => 
+            cart.some(item => item.id === offer.id && item.optionKey === option.value) ||
+            permanentlySoldItems.some(item => item.id === offer.id.toString() && item.optionKey === option.value)
+          ).length;
+
+          const isFullySoldOut = totalUnavailableOptionsCount === 4;
 
           return (
             <div key={offer.id} className="offer-flat-card" style={isFullySoldOut ? { opacity: 0.45 } : {}}>
@@ -92,11 +114,11 @@ export default function Offer() {
               {/* Left Side: Photo with Special Deal Ribbon */}
               <div className="image-section">
                 <img src={resolvedImageUrl} alt={offer.title} loading="lazy" />
-                <div className="exclusive-ribbon">{isFullySoldOut ? 'Sold' : 'Special Deal'}</div>
+                <div className="exclusive-ribbon">{isFullySoldOut ? 'Sold Out' : 'Special Deal'}</div>
                 
                 {isFullySoldOut && (
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0,0,0,0.85)', color: '#ff4d00', padding: '0.4rem 0.8rem', borderRadius: '4px', fontSize: '1.1rem', fontWeight: 'bold', border: '1px solid #ff4d00', whiteSpace: 'nowrap', zIndex: 10 }}>
-                    Currently Not Available (Temporary Hold)
+                    Currently Not Available 
                   </div>
                 )}
               </div>
@@ -118,13 +140,16 @@ export default function Offer() {
                       style={{ padding: '0.85rem', fontSize: '1.15rem', width: '100%' }}
                     >
                       {productOptions.map((option) => {
-                        const isThisOptionTaken = cart.some(
+                        const isThisOptionInCart = cart.some(
                           item => item.id === offer.id && item.optionKey === option.value
+                        );
+                        const isThisOptionSold = permanentlySoldItems.some(
+                          item => item.id === offer.id.toString() && item.optionKey === option.value
                         );
                         
                         return (
-                          <option key={option.value} value={option.value}>
-                            {option.label} {isThisOptionTaken ? ' - (Temporary Hold)' : ''}
+                          <option key={option.value} value={option.value} disabled={isThisOptionSold}>
+                            {option.label} {isThisOptionInCart ? ' - (Temporary Hold)' : isThisOptionSold ? ' - (SOLD)' : ''}
                           </option>
                         );
                       })}
@@ -146,10 +171,10 @@ export default function Offer() {
                       variant="btn-medium" 
                       className="add-to-cart-btn"
                       onClick={() => handleAddToCart(offer)}
-                      disabled={isFullySoldOut || isCurrentOptionInCart}
-                      style={(isFullySoldOut || isCurrentOptionInCart) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed', width: '180px', minHeight: '50px', fontSize: '1.75rem' } : { width: '180px', minHeight: '50px', fontSize: '1.75rem' }}
+                      disabled={isFullySoldOut || isCurrentOptionUnavailable}
+                      style={(isFullySoldOut || isCurrentOptionUnavailable) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed', width: '180px', minHeight: '50px', fontSize: '1.75rem' } : { width: '180px', minHeight: '50px', fontSize: '1.75rem' }}
                     >
-                      {isFullySoldOut ? 'Sold Out' : isCurrentOptionInCart ? 'Temporary Hold' : 'Add To Cart'}
+                      {isFullySoldOut ? 'Sold Out' : isOptionSoldPermanently ? 'Sold' : isCurrentOptionInCart ? 'Temporary Hold' : 'Add To Cart'}
                     </Button>
 
                   </div>

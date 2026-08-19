@@ -25,3 +25,6 @@ dist-ssr
 *.env
 .env
 
+# Hide local customer order histories and backups
+tp-store-backend/orders.json
+tp-store-backend/orders-backup-*.json

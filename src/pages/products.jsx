@@ -12,12 +12,12 @@ const Products = () => {
 
 export default Products;*/
 
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import Button from '../components/Button.jsx';
 import './products.scss';
-import { useCart } from '../context/cart_context.jsx'; // Pointing cleanly to your consolidated context engine
+import { useCart } from '../context/cart_context.jsx'; 
 
-//  LINKED DIRECTLY TO YOUR COMMENT-FREE DATA ARRAY
+// LINKED DIRECTLY TO YOUR COMMENT-FREE DATA ARRAY
 import rawProductsData from '../data/products.json';
 
 const ITEM_COSTS = {
@@ -31,6 +31,17 @@ export default function Products() {
   const { addToCart, cart } = useCart();
   const [activeFilter, setActiveFilter] = useState('All');
   const [selectedOptions, setSelectedOptions] = useState({});
+
+  // 🌟 GLOBAL LIVE STATE: Holds sold item structures fetched directly from server file registry
+  const [permanentlySoldItems, setPermanentlySoldItems] = useState([]);
+
+  // 🌟 NETWORK HOOK: Fetch global inventory states from server on page load (Bypassing Caches)
+  useEffect(() => {
+    fetch('http://localhost:5000/api/sold-items', { cache: 'no-store' })
+      .then(res => res.json())
+      .then(data => setPermanentlySoldItems(data))
+      .catch(err => console.error("Error pulling live store inventory locks:", err));
+  }, []);
 
   const productOptions = [
     { value: 'single-bracelet', label: 'Single Bracelet (18cm)' },
@@ -61,7 +72,7 @@ export default function Products() {
 
   const filterTabs = ['All', 'Natural Shape', 'Oval Shape', 'Rondelle Shape', 'Round (Big) Shape', 'Round (Small) Shape'];
 
-  return (
+    return (
     <div className="page-container products-page">
       <h2 className="products-title">Our Jewellery Collection</h2>
       <p className="products-subtitle">Handmade with premium stone, wood, glass and coral beads.</p>
@@ -83,12 +94,26 @@ export default function Products() {
           const currentVariantKey = selectedOptions[product.id] || 'single-bracelet';
           const activeDisplayPrice = ITEM_COSTS[currentVariantKey];
           
+          // 1. Check if the currently selected dropdown option is sitting in the transient cart
           const isCurrentOptionInCart = cart.some(
             item => item.id === product.id && item.optionKey === currentVariantKey
           );
 
-          const optionsInCartCount = cart.filter(item => item.id === product.id).length;
-          const isFullySoldOut = optionsInCartCount === 4;
+          // 2. Check if the currently selected dropdown option has been permanently sold on the server
+          const isOptionSoldPermanently = permanentlySoldItems.some(
+            item => item.id === product.id.toString() && item.optionKey === currentVariantKey
+          );
+
+          // 3. Combine parameters to block the main button states immediately
+          const isCurrentOptionUnavailable = isCurrentOptionInCart || isOptionSoldPermanently;
+
+          // 4. Calculate total locked variant choices to completely fade out the product card frame
+          const totalUnavailableOptionsCount = productOptions.filter(option => 
+            cart.some(item => item.id === product.id && item.optionKey === option.value) ||
+            permanentlySoldItems.some(item => item.id === product.id.toString() && item.optionKey === option.value)
+          ).length;
+
+          const isFullySoldOut = totalUnavailableOptionsCount === 4;
 
           return (
             <div key={product.id} className="product-frame-card" style={isFullySoldOut ? { opacity: 0.45 } : {}}>
@@ -96,10 +121,9 @@ export default function Products() {
                 <img src={product.image} alt={product.title} loading="lazy" />
                 <span className="subcategory-badge">{product.subcategory}</span>
                 
-                {/* 🌟 UPDATED: Appended (Temporary Hold) text status message on full product lock */}
                 {isFullySoldOut && (
                   <div style={{ position: 'absolute', top: '50%', left: '50%', transform: 'translate(-50%, -50%)', backgroundColor: 'rgba(0,0,0,0.85)', color: '#ff4d00', padding: '0.5rem 1rem', fontSize: '1.2rem', fontWeight: 'bold', border: '1px solid #ff4d00', borderRadius: '4px', whiteSpace: 'nowrap', zIndex: 10 }}>
-                    Currently Not Available (Temporary Hold)
+                    Currently Not Available 
                   </div>
                 )}
               </div>
@@ -117,14 +141,18 @@ export default function Products() {
                     disabled={isFullySoldOut}
                   >
                     {productOptions.map((option) => {
-                      const isThisOptionTaken = cart.some(
+                      const isThisOptionInCart = cart.some(
                         item => item.id === product.id && item.optionKey === option.value
                       );
                       
+                      // 🌟 PRODUCTION FIX: Explicitly scan the persistent state loop to lock individual options inside the select element!
+                      const isThisOptionSold = permanentlySoldItems.some(
+                        item => item.id === product.id.toString() && item.optionKey === option.value
+                      );
+                      
                       return (
-                        <option key={option.value} value={option.value}>
-                          {/* 🌟 UPDATED: Custom status wording inside your option configurations selection menu fields */}
-                          {option.label} {isThisOptionTaken ? ' - (Temporary Hold)' : ''}
+                        <option key={option.value} value={option.value} disabled={isThisOptionSold}>
+                          {option.label} {isThisOptionInCart ? ' - (Temporary Hold)' : isThisOptionSold ? ' - (SOLD)' : ''}
                         </option>
                       );
                     })}
@@ -137,11 +165,10 @@ export default function Products() {
                   variant="btn-medium" 
                   className="add-to-cart-btn"
                   onClick={() => handleAddToCart(product)}
-                  disabled={isFullySoldOut || isCurrentOptionInCart}
-                  style={(isFullySoldOut || isCurrentOptionInCart) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed' } : {}}
+                  disabled={isFullySoldOut || isCurrentOptionUnavailable}
+                  style={(isFullySoldOut || isCurrentOptionUnavailable) ? { backgroundColor: '#a6a6a6', color: '#022c33', cursor: 'not-allowed' } : {}}
                 >
-                  {/* 🌟 UPDATED: Interactive Action Call Button Status Description */}
-                  {isFullySoldOut ? 'Sold Out' : isCurrentOptionInCart ? 'Temporary Hold' : 'Add To Cart'}
+                  {isFullySoldOut ? 'Sold Out' : isOptionSoldPermanently ? 'Sold' : isCurrentOptionInCart ? 'Temporary Hold' : 'Add To Cart'}
                 </Button>
               </div>
             </div>
@@ -151,4 +178,3 @@ export default function Products() {
     </div>
   );
 }
-

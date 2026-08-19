@@ -1,1 +1,58 @@
-[]
+[
+  {
+    "id": "offer-1",
+    "optionKey": "single-bracelet"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "single-bracelet"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "double-bracelet"
+  },
+  {
+    "id": "1",
+    "optionKey": "short-necklace"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "single-bracelet"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "double-bracelet"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "short-necklace"
+  },
+  {
+    "id": "offer-1",
+    "optionKey": "long-necklace"
+  },
+  {
+    "id": "2",
+    "optionKey": "single-bracelet"
+  },
+  {
+    "id": "2",
+    "optionKey": "double-bracelet"
+  },
+  {
+    "id": "2",
+    "optionKey": "short-necklace"
+  },
+  {
+    "id": "2",
+    "optionKey": "long-necklace"
+  },
+  {
+    "id": "1",
+    "optionKey": "single-bracelet"
+  },
+  {
+    "id": "offer-2",
+    "optionKey": "single-bracelet"
+  }
+]

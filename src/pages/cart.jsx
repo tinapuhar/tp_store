@@ -24,7 +24,7 @@ export default function Cart() {
   const { cart, removeFromCart, cartTotal, clearCart } = useCart();
   
     // MASTER TOGGLE: Change to `false` to lock orders, `true` to open them
-  const ORDERS_ENABLED = false; 
+  const ORDERS_ENABLED = true; 
 
   // Default payment selection set to Bank Transfer since others are locked
   const [paymentMethod, setPaymentMethod] = useState('bank-transfer');
@@ -58,6 +58,12 @@ export default function Cart() {
     const LOCAL_ORDER_API_URL = "http://localhost:5000/api/order";
 
     try {
+      // Format items into a clean array to send to the server database registry
+      const trackingItemsPayload = cart.map(item => ({
+        id: item.id.toString(),
+        optionKey: item.optionKey
+      }));
+
       const response = await fetch(LOCAL_ORDER_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
@@ -68,11 +74,16 @@ export default function Cart() {
           orderNotes: customerInfo.orderNotes,
           purchasedProductsBreakdown: serializedOrderDetails,
           orderGrandTotal: `€${cartTotal.toFixed(2)}`,
-          targetInbox: "tinapuhar@gmail.com"
+          targetInbox: "tinapuhar@gmail.com",
+          itemsArray: trackingItemsPayload // Sends item details to be stored inside orders.json
+          /*cartItems: cart // new*/
         })
       });
 
       if (response.ok) {
+        const previouslySold = JSON.parse(localStorage.getItem('tp_sold_items') || '[]'); //new
+        const newlySold = cart.map(item => ({ id: item.id.toString(), optionKey: item.optionKey })); //new
+        localStorage.setItem('tp_sold_items', JSON.stringify([...previouslySold, ...newlySold])); //new
         alert(
           `Order Confirmed via Bank Transfer!\n\nThank you, ${customerInfo.fullName}. A complete statement, payment details, and shipping invoice breakdown has been logged and prepared for your email.`
         );
