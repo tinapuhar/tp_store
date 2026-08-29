@@ -24,7 +24,7 @@ export default function Cart() {
   const { cart, removeFromCart, cartTotal, clearCart } = useCart();
   
     // MASTER TOGGLE: Change to `false` to lock orders, `true` to open them
-  const ORDERS_ENABLED = true; 
+  const ORDERS_ENABLED = false; 
 
   // Default payment selection set to Bank Transfer since others are locked
   const [paymentMethod, setPaymentMethod] = useState('bank-transfer');
