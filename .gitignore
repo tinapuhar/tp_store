@@ -24,6 +24,10 @@ dist-ssr
 *.sw?
 *.env
 .env
+.env.local
+.env.production
+.wrangler/
+node_modules/
 
 # Hide local customer order histories and backups
 tp-store-backend/orders.json

@@ -126,7 +126,7 @@ app.post('/api/order', checkoutLimiter, async (req, res) => {
   }
 });
 
-// 🌟 SECURE DEVELOPER ENDPOINT: Returns multiple item variants back into live stock at once
+// SECURE DEVELOPER ENDPOINT: Returns multiple item variants back into live stock at once
 app.post('/api/dev/return-items', (req, res) => {
   try {
     const incomingPassword = req.headers['x-dev-auth'];
@@ -179,7 +179,7 @@ app.post('/api/dev/return-items', (req, res) => {
   }
 });
 
-// 🌟 SECURE DEVELOPER ENDPOINT: Backs up current sales monthly and resets the store inventory ledger
+// SECURE DEVELOPER ENDPOINT: Backs up current sales monthly and resets the store inventory ledger
 app.post('/api/dev/reset-inventory', (req, res) => {
   try {
     const incomingPassword = req.headers['x-dev-auth'];
@@ -216,3 +216,5 @@ app.post('/api/dev/reset-inventory', (req, res) => {
 app.listen(PORT, () => {
   console.log(`Boutique API server running on port ${PORT}`);
 });
+
+
