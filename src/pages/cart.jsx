@@ -55,7 +55,8 @@ export default function Cart() {
     setIsProcessing(true);
     
     // backend api
-    const LOCAL_ORDER_API_URL = "http://localhost:5000/api/order";
+    //const LOCAL_ORDER_API_URL = "http://localhost:5000/api/order";
+    const API_BASE_URL = import.meta.env.VITE_API_BASE_URL  || 'http://localhost:5000';
 
     try {
       // Format items into a clean array to send to the server database registry
@@ -64,7 +65,7 @@ export default function Cart() {
         optionKey: item.optionKey
       }));
 
-      const response = await fetch(LOCAL_ORDER_API_URL, {
+      const response = await fetch(`${API_BASE_URL}/api/order`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({
